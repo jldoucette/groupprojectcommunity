@@ -16,7 +16,9 @@
   },
   "description": "Group Project 2 for Team 7",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^2.1.0-beta.22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jldoucette/groupprojectcommunity.git"
