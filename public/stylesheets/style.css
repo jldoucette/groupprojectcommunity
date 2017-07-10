@@ -7,6 +7,6 @@ a {
   color: #00B7FF;
 }
 
-#title{
-  color: red;
+.page-header h1{
+  font-size: 50px;
 }
