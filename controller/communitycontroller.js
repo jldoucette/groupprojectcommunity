@@ -11,7 +11,17 @@ module.exports = function(app){
     });
 
     app.get('/blog', function(req, res) {
-        res.render('blog');
+      db.Blogs.findAll({
+
+         include: [db.Comments],
+         order: [ 'id',
+                [db.Comments, 'createdAt', 'DESC']]
+      }).then(function(data) {
+          var hbsObject = {
+        Blog: data
+      };
+       res.render("blog", hbsObject);
+      });
     });
 
     app.get('/events', function(req, res) {
@@ -23,9 +33,36 @@ module.exports = function(app){
     });
 
     app.get('/classifieds', function(req, res) {
-        res.render('classified');
+      db.Classifieds.findAll({
+         order: ['id']
+      }).then(function(data) {
+          var hbsObject = {
+        classified: data
+      };
+       res.render("classified", hbsObject);
+      });
     });
 
+    app.post("/blog", function(req, res) {
+       console.log(req.body);
+       db.Blogs.create({
+         user: req.body.user,
+         blogtitle: req.body.blogtitle,
+         blogpost: req.body.blogpost
+       }).then(function(data) {
+         res.redirect("/blog");
+       });
+     });
+
+     app.post("/comment", function(req, res) {
+        console.log(req.body);
+        db.Comments.create({
+          commentpost: req.body.comment,
+          BlogId: req.body.currblogid,
+          user:req.body.currbloguser
+        }).then(function(data) {
+          res.redirect("/blog");
+        });
+      });
 
 }
-
