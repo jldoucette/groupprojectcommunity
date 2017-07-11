@@ -1,1 +1,53 @@
 <h1>Classifieds</h1>
+
+<div id="classified">
+           <h2>Classified Advertising</h2>
+           <ul>
+             {{#each classified}}
+
+                   <h2><strong>{{this.itemtitle}}</strong></h2>     <h4>Posted By: {{this.user}} At {{this.createdAt}}</h4>
+                   <p>{{this.saleitem}}</p>
+                   <p>Price is: ${{this.price}}</p>
+
+                   {{#if this.itempicturelink}}
+                     <img src="http://jandmtravels.com/schoolimages/{{this.itempicturelink}}" alt="{{this.itemtitle}}" width="400" height="200">
+                  {{/if}} 
+       
+   
+   <form class="create-update-form" action="/makeoffer" method="POST">
+        <h4>Communicate with Seller</h4>
+                   <div class="form-group">
+                     <label for="bcomment">Note to Seller</label>
+                     <input type="text" id="bcomment" name="comment">
+                      <label for="bemail">Email Address</label>
+                     <input type="text" id="bemail" name="email">
+                     <input type="hidden" name="itemforsale" value={{this.itemtitle}}>
+                     <input type="hidden" name="price" value={{this.price}}>
+                   </div>
+                   <button class="btn btn-default btn-large" type="submit">Submit and Email</button>
+                 </form>
+                       {{/each}}
+           </ul>
+
+      
+                 <h2>Create a Classifed Ad</h2>
+                 <form class="create-update-form" action="/classifieds" method="POST">
+
+                   <div class="form-group">
+                     <label for="btitle">Item Title</label>
+                     <input type="text" id="btitle" name="itemtitle">
+                      <label for="bdesc">Item Description</label>
+                     <input type="text" id="bdesc" name="saleitem">
+                    <label for="bprice">Price</label>
+                     <input type="text" id="bprice" name="price">
+                     <label for="buser">User</label>
+                     <input type="text" id="buser" name="user">
+         
+                   </div>
+
+                   <button class="btn btn-default btn-large" type="submit">Submit Ad</button>
+                 </form>
+
+
+
+         </div>

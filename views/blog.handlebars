@@ -1,1 +1,50 @@
-<h1>Blogs</h1>
+<h1>Community Discussion Area</h1>
+
+<div id="blogpost">
+         <h3>Community Member Posts</h3>
+         <h5>This is a family community! Be Civil!</h5>
+         <ul>
+           {{#each Blog}}
+
+                 <h2><strong>{{this.blogtitle}}</strong></h2>     <h4>Posted By: {{this.user}} At {{this.createdAt}}</h4>
+                 <h3><strong>Original Blog Post:</strong> {{this.blogpost}}</h3>
+                 {{#each Comments}}
+                 <p>Comments by:<strong> {{this.user}} on: {{this.createdAt}}</strong>  {{this.commentpost}}</p>
+                 {{/each}}
+
+                 <form class="create-update-form" action="/comment" method="POST">
+
+                   <div class="form-group">
+                     <label for="bcomment">Comment</label>
+                     <input type="text" id="bcomment" name="comment">
+                     <input type="hidden" name="currblogid" value={{this.id}}>
+                     <input type="hidden" name="currbloguser" value={{this.user}}>
+
+
+
+                   <button class="btn btn-default btn-large" type="submit">Comment on Blog</button>
+                        </div>
+                 </form>
+           {{/each}}
+         </ul>
+     </div>
+
+       <div id="addpost">
+                 <h2>Add A Blog Post</h2>
+                 <form class="create-update-form" action="/blog" method="POST">
+
+                   <div class="form-group">
+                     <label for="btitle">Blog Title</label>
+                     <input type="text" id="btitle" name="blogtitle">
+                      <label for="bpost">Blog Post</label>
+                     <input type="text" id="bpost" name="blogpost">
+                     <label for="buser">User</label>
+                     <input type="text" id="buser" name="user">
+                   </div>
+
+                   <button class="btn btn-default btn-large" type="submit">Post to Blog</button>
+                 </form>
+
+
+
+         </div>
