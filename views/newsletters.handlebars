@@ -1,1 +1,42 @@
-<h1>Newsletter</h1>
+
+<div className="container">
+    {{!--Will display the newsletters--}}
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Current News</h3>
+                </div>
+                    <ul>
+                        {{#each newsletters}}git 
+                            <h3>{{this.post_title}}</h3> <h4> {{this.createdAt}}</h4>
+                            <p>{{this.post_body}}</p>
+                        {{/each}}
+                    </ul>           
+            </div>
+        </div>          
+    </div>
+
+    {{!--Input Box for New Newsletter updates--}}
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Create NewsLetter</h1>
+            <form class="create-update-form" action="/newsletters" method="POST">
+
+                <div class="form-group">
+                    <label for="ca">Newsletter Title</label>
+                    <input type="text" id="ca" name="title">
+                </div>                    
+
+                <div class="form-group">
+                    <label for="ca">Newsletter Information</label>
+                    <input type="text" id="ca" name="body">
+                </div>                         
+
+                <button type="submit">Add Newsletter</button>
+            </form>
+        </div>
+    </div>
+
+ 
+</div>

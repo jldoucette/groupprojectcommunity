@@ -18,14 +18,28 @@ module.exports = function(app){
         res.render('events');
     });
 
-    app.get('/newsletter', function(req, res) {
-        res.render('newsletters');
-    });
+    app.get("/newsletters", function(req, res) {
+        db.Newsletters.findAll({}).then(function(data){
+            var hbsObject = {
+                newsletters: data
+            };
+            console.log(hbsObject);
+            res.render("newsletters", hbsObject);
+        })
+    });      
 
     app.get('/classifieds', function(req, res) {
         res.render('classified');
     });
 
+    app.post('/newsletters', function(req, res){
+        db.Newsletters.create({
+            post_title: req.body.title,
+            post_body: req.body.body
+        }).then(function(data){
+            res.redirect("/newsletters");
+        })
+    });
 
 }
 
