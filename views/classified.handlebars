@@ -1,1 +1,15 @@
 <h1>Classifieds</h1>
+
+<div id="classified">
+           <h2>Classified Advertising</h2>
+           <ul>
+             {{#each classified}}
+
+                   <h2><strong>{{this.itemtitle}}</strong></h2>     <h4>Posted By: {{this.user}} At {{this.createdAt}}</h4>
+                   <p>{{this.saleitem}}</p>
+                   <p>Price is: ${{this.price}}</p>
+                   <img src="http://jandmtravels.com/schoolimages/{{this.itempicturelink}}" alt="{{this.itemtitle}}" width="400" height="200">
+
+             {{/each}}
+           </ul>
+       </div>
