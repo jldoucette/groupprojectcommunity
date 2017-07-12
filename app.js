@@ -1,6 +1,7 @@
 var express = require('express');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
+var socket = require('socket.io');
 
 var app = express();
 var PORT = process.env.PORT || 3001;
@@ -25,6 +26,10 @@ app.set("view engine", "handlebars");
 
 // Routes
 require("./controller/communitycontroller.js")(app);
+
+// require("./controller/newslettercontroller.js")(app);
+// require("./controller/chatroomcontroller.js")(app);
+
 
 
 // Syncing our sequelize models and then starting our express app

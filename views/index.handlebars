@@ -1,7 +1,41 @@
-<div>
-    {{#each Newsletters}}
-        <li>
-            {{this.post_title}}
-        </li>
-    {{/each}}
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Login Page</title>
+	<!-- Latest compiled and minified CSS & JS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../public/stylesheets/LoginStyles.css" media="screen" title="no title">
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<ul class="list-group todo-list">
+					
+						
+						<div>
+							<input class="userlogin" placeholder="User name" type="text" name="username" />
+						</div>
+						<div>
+							<input class="password" placeholder="Password" type="text" name="password" />
+						</div>
+						<button type="submit" class="btn btn-default Entry">Login</button>	
+						<form>					
+						<button type="submit" class="btn btn-default NewUser"> Create A Profile </button>
+						</form>
+						
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Custom Script -->
+	<script src="../public/javascripts/index.js" type="text/javascript"></script>
+
+</body>
+
+</html>

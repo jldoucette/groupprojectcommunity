@@ -5,29 +5,42 @@
          <h5>This is a family community! Be Civil!</h5>
          <ul>
            {{#each Blog}}
+              <div class="panel panel-default">
+                    <div class="panel-heading">
+                       <h6 class="panel-title"><strong>{{this.blogtitle}}</strong></h6>     
+                       <h6>Posted By: {{this.user}} At {{this.createdAt}}</h6>
+                   </div>
 
-                 <h2><strong>{{this.blogtitle}}</strong></h2>     <h4>Posted By: {{this.user}} At {{this.createdAt}}</h4>
-                 <h3><strong>Original Blog Post:</strong> {{this.blogpost}}</h3>
-                 {{#each Comments}}
-                 <p>Comments by:<strong> {{this.user}} on: {{this.createdAt}}</strong>  {{this.commentpost}}</p>
+                   <div class="panel-body">
+                      <h4>{{this.blogpost}}</h4>
+                           <form class="create-update-form" action="/comment" method="POST">
+
+                          <div class="form-group">
+                               <label for="bcomment">Comment</label>
+                               <textarea class="form-control" name='comment' rows='5' id='bcomment'></textarea>
+                               <input type="hidden" name="currblogid" value={{this.id}}>
+                               <input type="hidden" name="currbloguser" value={{this.user}}>
+
+                              <button class="btn btn-default btn-large" type="submit">Comment on Post</button>               
+                          </div>
+                    </form>
+                       {{#each Comments}}
+                  </div>
+
+                <div class="panel-body">
+                   <p>Comments by:<strong> {{this.user}} on: {{this.createdAt}}</strong></p>  
+                   <h5>{{this.commentpost}}</h5>
+                   {{/each}}
+              
+               
+                 </div> 
+              </div>  
                  {{/each}}
-
-                 <form class="create-update-form" action="/comment" method="POST">
-
-                   <div class="form-group">
-                     <label for="bcomment">Comment</label>
-                     <input type="text" id="bcomment" name="comment">
-                     <input type="hidden" name="currblogid" value={{this.id}}>
-                     <input type="hidden" name="currbloguser" value={{this.user}}>
-
-
-
-                   <button class="btn btn-default btn-large" type="submit">Comment on Blog</button>
-                        </div>
-                 </form>
-           {{/each}}
+                    
+                      
          </ul>
-     </div>
+           
+  
 
        <div id="addpost">
                  <h2>Add A Blog Post</h2>
@@ -37,7 +50,7 @@
                      <label for="btitle">Blog Title</label>
                      <input type="text" id="btitle" name="blogtitle">
                       <label for="bpost">Blog Post</label>
-                     <input type="text" id="bpost" name="blogpost">
+                      <textarea class="form-control" name='blogpost' rows='5' id='bpost'></textarea>
                      <label for="buser">User</label>
                      <input type="text" id="buser" name="user">
                    </div>

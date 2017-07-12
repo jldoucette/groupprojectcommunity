@@ -4,8 +4,12 @@ var nodemailer = require('nodemailer');
 module.exports = function(app){
 
     app.get('/', function(req, res) {
-        res.render('index'); //home page
+        res.render('index'); //login page
     });
+
+    app.get('/home', function(req, res) {
+        res.render('home'); 
+    });    
 
     app.get('/profile', function(req, res) {
         res.render('profile');
@@ -15,7 +19,8 @@ module.exports = function(app){
       db.Blogs.findAll({
 
          include: [db.Comments],
-         order: [ 'id',
+         order:
+                [['createdAt','DESC'],
                 [db.Comments, 'createdAt', 'DESC']]
       }).then(function(data) {
           var hbsObject = {
@@ -81,6 +86,20 @@ module.exports = function(app){
         })
     });    
 
+    app.get('/chatroom', function(req, res) {
+        res.render('chatroom'); 
+    });
+
+    // app.post('/newsletters', function(req, res){
+    //     db.Newsletters.create({
+    //         post_title: req.body.title,
+    //         post_body: req.body.body
+    //     }).then(function(data){
+    //         res.redirect("/newsletters");
+    //     })
+    // });
+
+
     app.post("/blog", function(req, res) {
        console.log(req.body);
        db.Blogs.create({
@@ -103,6 +122,18 @@ module.exports = function(app){
          res.redirect("/classifieds");
        });
      });
+
+      app.post("/api/solditem", function(req, res) {
+    db.Classifieds.update({
+      sold: true},
+        {where: {
+          id: req.body.itemid
+        }
+      })
+    .then(function(data) {
+      res.redirect("/classifieds");
+    });
+  });
 
      app.post("/comment", function(req, res) {
         console.log(req.body);
@@ -129,13 +160,13 @@ module.exports = function(app){
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-            user: 'TBD',
-            pass: 'TBD'
+            user: 'jldoucette.work@gmail.com',
+            pass: 'Group7%rj'
             }
           });
 
         var mailOptions = {
-        from: 'TBD',
+        from: 'jldoucette.work@gmail.com',
         to: email,
         subject: 'Email message from Community Classifieds Buyer about ' + itemforsale ,
         text: 'Message from Community Classifieds Buyer about '+ itemforsale + '. This was listed by you at $'+ price +':  '+ comment
