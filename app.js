@@ -26,8 +26,8 @@ app.set("view engine", "handlebars");
 
 // Routes
 require("./controller/communitycontroller.js")(app);
-require("./controller/newslettercontroller.js")(app);
-require("./controller/chatroom.js")(app);
+// require("./controller/newslettercontroller.js")(app);
+// require("./controller/chatroomcontroller.js")(app);
 
 
 // Syncing our sequelize models and then starting our express app
