@@ -4,8 +4,12 @@ var nodemailer = require('nodemailer');
 module.exports = function(app){
 
     app.get('/', function(req, res) {
-        res.render('index'); //home page
+        res.render('index'); //login page
     });
+
+    app.get('/home', function(req, res) {
+        res.render('home'); 
+    });    
 
     app.get('/profile', function(req, res) {
         res.render('profile');
@@ -48,6 +52,10 @@ module.exports = function(app){
       };
        res.render("classified", hbsObject);
       });
+    });
+
+    app.get('/chatroom', function(req, res) {
+        res.render('chatroom'); 
     });
 
     // app.post('/newsletters', function(req, res){
