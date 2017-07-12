@@ -1,14 +1,14 @@
 
-<div className="container">
+<div class="container">
     {{!--Will display the newsletters--}}
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-10 col-lg-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Current News</h3>
                 </div>
                     <ul>
-                        {{#each newsletters}}git 
+                        {{#each newsletters}}
                             <h3>{{this.post_title}}</h3> <h4> {{this.createdAt}}</h4>
                             <p>{{this.post_body}}</p>
                         {{/each}}
@@ -18,25 +18,39 @@
     </div>
 
     {{!--Input Box for New Newsletter updates--}}
-    <div class="row">
-        <div class="col-md-12">
-            <h1> Create NewsLetter</h1>
-            <form class="create-update-form" action="/newsletters" method="POST">
+    <form class="form-horizontal" action="/newsletters" method="POST">
+        <!-- <fieldset> -->
 
-                <div class="form-group">
-                    <label for="ca">Newsletter Title</label>
-                    <input type="text" id="ca" name="title">
-                </div>                    
+            <!-- Form Name -->
+            <!-- <legend>Add Event</legend> -->
 
-                <div class="form-group">
-                    <label for="ca">Newsletter Information</label>
-                    <input type="text" id="ca" name="body">
-                </div>                         
+            <!-- Newsletter Title-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ca">Newsletter Title</label>
+                <div class="col-md-6">
+                    <input id="textinput" name="title" type="text" class="form-control input-md">
 
-                <button type="submit">Add Newsletter</button>
-            </form>
-        </div>
-    </div>
+                </div>
+            </div>
 
- 
+            <!-- Newsletter Body -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ca">Newsletter Information</label>
+                <div class="col-md-6">
+                    {{!--<input id="textinput" name="body" type="text" class="form-control input-md" >--}}
+                    <textarea class="form-control" name="body" rows="5" id="comment"></textarea>
+                </div>
+            </div>
+
+            <!-- Button (D  ouble) -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="submitButton"></label>
+                <div class="col-md-8">
+                    <button id="submitButton" name="submitButton" class="btn btn-primary">Post News</button>
+                </div>
+            </div>
+
+        <!-- </fieldset> -->
+    </form>   
+
 </div>

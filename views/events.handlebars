@@ -1,1 +1,94 @@
-<h1>Events page</h1>
+
+<div class="container">
+    
+    <div class="row">
+        <ul>
+            {{#each events}}
+                <div class="row">
+                    <h1>{{this.event_name}}</h1>
+
+                    <div class="col-md-2 col-md-1-offset-2">
+                        <h5>{{this.event_date}}</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5>{{this.event_details}}</h5>
+                    </div>
+
+                    <div class="col-md-2">
+                        <h5>{{this.event_time}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <h5>{{this.event_location}}</h5>
+                    </div>
+                </div>
+            {{/each}}
+        </ul>
+    </div>
+
+    <form class="form-horizontal" action ="/events" method="POST">
+        <!-- <fieldset> -->
+
+            <!-- Event Name-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ca">Event Name</label>
+                <div class="col-md-6">
+                    <input id="textinput" name="eventName" type="text" class="form-control input-md">
+                </div>
+            </div>
+
+            <!-- Event Location -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ca">Event Location</label>
+                <div class="col-md-4">
+                    {{!--<input id="textinput" name="eventLocation" type="text" class="form-control input-md">--}}
+                    <select id="eventType" name="eventLocation" class="form-control">
+                        <option value="Jefferson Park">Jefferson Park</option>
+                        <option value="Community Pool D">Community Pool A</option>
+                        <option value="Community Building 1">Community Building 1</option>
+                        <option value="Tri Park">Tri Park</option>
+                        <option value="Apple Park">Apple Park</option>
+                        <option value="Community Pool A">Community Pool A</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Event Time -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ca">Event Time</label>
+                <div class="col-md-6">
+                    <input id="textinput" name="eventTime" type="text" placeholder="00:00" class="form-control input-md">
+                </div>
+            </div>		        
+
+            <!-- Event Date Input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ca">Date</label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input id="textinput" name="eventDate" class="form-control" placeholder="MM/DD/YYYY" type="text">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Event Details -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ca">Event Details</label>
+                <div class="col-md-6">
+                    <input id="textinput" name="eventDetails" type="text" placeholder="" class="form-control input-md">
+
+                </div>
+            </div>
+
+            <!-- Button (D	ouble) -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="submitButton"></label>
+                <div class="col-md-8">
+                    <button id="submitButton" name="submitButton" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+
+        <!-- </fieldset> -->
+    </form>
+
+</div>
