@@ -2,7 +2,6 @@ var express = require('express');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 
-
 var app = express();
 var PORT = process.env.PORT || 3001;
 var db = require("./models");
@@ -26,9 +25,11 @@ app.set("view engine", "handlebars");
 
 // Routes
 require("./controller/communitycontroller.js")(app);
+require("./controller/newslettercontroller.js")(app);
+
 
 // Syncing our sequelize models and then starting our express app
-db.sequelize.sync({ force: true }).then(function() {
+db.sequelize.sync({ force: false }).then(function() {
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
