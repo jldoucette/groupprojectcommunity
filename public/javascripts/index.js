@@ -39,8 +39,8 @@ $(document).ready(function() {
             <input class="new-item" placeholder="User name" id="user_name" type="text" />
 						<input class="new-item" placeholder="Age" id="user_age" type="text" />
 						<input class="new-item" placeholder="Email" id="user_email" type="text" />
-						<input class="new-item" placeholder="Password" id="user_password" type="text" />
-            <input class="new-item" placeholder="Password Check" id="password_check" type="text" />
+						<input class="new-item" type="password" placeholder="Password" id="user_password" type="text" />
+            <input class="new-item" type="password" placeholder="Password Check" id="password_check" type="text" />
 						<input class="new-item" placeholder="Short bio" id="user_bio" type="text" />
                         <button type="submit" class="btn btn-default PostUser"> Create Your Profile </button>				
 						</form>

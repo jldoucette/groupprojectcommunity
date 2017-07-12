@@ -1,14 +1,12 @@
-module.exports = function(sequelize, DataTypes) {
-    var Profile = sequelize.define("Profile", {
-        user_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true
-        },
+sequelize = require("sequelize");
+
+module.exports = function (sequelize, DataTypes) {
+    var profile = sequelize.define("profile", {
         user_name: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [3]
+                len: [1, 20]
             }
         },
         user_age: {
@@ -16,44 +14,50 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         user_bio: {
-            type:DataTypes.TEXT,
+            type: DataTypes.TEXT,
             allowNull: true,
             validate: {
-                len: [50]
+                len: [1, 50]
             }
         },
         user_email: {
             type: DataTypes.STRING,
-            allowNull: false,   
+            allowNull: false,
             validate: {
-                len: [10]
+                len: [1, 20]
             }
         },
         user_password: {
             type: DataTypes.STRING,
             validate: {
-                len: [4]
+                len: [1, 255]
             }
+        },
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
         }
-    });
+    })
     //Joining the Blog table
-    Profile.associate = function(models){
-        Profile.hasMany(models.Blogs, {
+    profile.associate = function (models) {
+        profile.hasMany(models.Blogs, {
             onDelete: "cascade"
         });
     }
     //Joining the Classifieds table
-    Profile.associate = function(models){
-        Profile.hasMany(models.Classifieds, {
+    profile.associate = function (models) {
+        profile.hasMany(models.Classifieds, {
             onDelete: "cascade"
         });
     }
     //Joining the Comments table
-    Profile.associate = function(models){
-        Profile.hasMany(models.Comments, {
+    profile.associate = function (models) {
+        profile.hasMany(models.Comments, {
             onDelete: "cascade"
         });
     }
 
-    return Profile;
+    return profile;
 }
+
