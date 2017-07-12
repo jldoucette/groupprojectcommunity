@@ -19,7 +19,8 @@ module.exports = function(app){
       db.Blogs.findAll({
 
          include: [db.Comments],
-         order: [ 'id',
+         order:
+                [['createdAt','DESC'],
                 [db.Comments, 'createdAt', 'DESC']]
       }).then(function(data) {
           var hbsObject = {
@@ -89,6 +90,18 @@ module.exports = function(app){
          res.redirect("/classifieds");
        });
      });
+
+      app.post("/api/solditem", function(req, res) {
+    db.Classifieds.update({
+      sold: true},
+        {where: {
+          id: req.body.itemid
+        }
+      })
+    .then(function(data) {
+      res.redirect("/classifieds");
+    });
+  });
 
      app.post("/comment", function(req, res) {
         console.log(req.body);
