@@ -30,12 +30,22 @@ module.exports = function(app){
       });
     });
 
-    app.get('/events', function(req, res) {
-        res.render('events');
-    });
+    app.get("/events", function(req, res) {
+        db.Events.findAll({
+          order: [['id', 'DESC']]
+        }).then(function(data){
+            var hbsObject = {
+                events: data
+            };
+            console.log(hbsObject);
+            res.render("events", hbsObject);
+        })
+    }); 
 
     app.get("/newsletters", function(req, res) {
-        db.Newsletters.findAll({}).then(function(data){
+        db.Newsletters.findAll({
+          order: [['id', 'DESC']]
+        }).then(function(data){
             var hbsObject = {
                 newsletters: data
             };
@@ -55,6 +65,27 @@ module.exports = function(app){
       });
     });
 
+    app.post('/newsletters', function(req, res){
+        db.Newsletters.create({
+            post_title: req.body.title,
+            post_body: req.body.body
+        }).then(function(data){
+            res.redirect("/newsletters");
+        })
+    });
+
+    app.post('/events', function(req, res){
+        db.Events.create({
+            event_name: req.body.eventName,
+            event_time: req.body.eventTime,
+            event_date: req.body.eventDate,
+            event_details: req.body.eventDetails,
+            event_location: req.body.eventLocation
+        }).then(function(data){
+            res.redirect("/events");
+        })
+    });    
+
     app.get('/chatroom', function(req, res) {
         res.render('chatroom'); 
     });
@@ -67,6 +98,7 @@ module.exports = function(app){
     //         res.redirect("/newsletters");
     //     })
     // });
+
 
     app.post("/blog", function(req, res) {
        console.log(req.body);
