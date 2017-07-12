@@ -115,13 +115,13 @@ module.exports = function(app){
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-            user: 'TBD',
-            pass: 'TBD'
+            user: 'jldoucette.work@gmail.com',
+            pass: 'Group7%rj'
             }
           });
 
         var mailOptions = {
-        from: 'TBD',
+        from: 'jldoucette.work@gmail.com',
         to: email,
         subject: 'Email message from Community Classifieds Buyer about ' + itemforsale ,
         text: 'Message from Community Classifieds Buyer about '+ itemforsale + '. This was listed by you at $'+ price +':  '+ comment
