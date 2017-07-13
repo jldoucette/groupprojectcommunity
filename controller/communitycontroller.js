@@ -203,21 +203,22 @@ module.exports = function(app){
 
 
     //create new Users STILL NEED TO MAKE THE VALUES APPROPRIATE WITH TEXT BOX
-   app.post("/newUser", function(req, res) {
-    var AlteredPassword = req.body.userPassword;
-     bcrypt.hash(AlteredPassword, saltRounds, function(err, hash) { //bcrypt encrypts the password
-      db.profile.create({
-          user_name: req.body.userName,
-          user_age: req.body.userAge,
-            user_email: req.body.userEmail,
-            user_password: hash,
-              user_bio: req.body.userBio,
-        complete: req.body.complete
-      });
-    }).then(function(dbTodo) {
-          res.redirect("/"); //trying to redirect but not working
 
-      });;
+app.post("/newUser", function(req, res) {
+  var AlteredPassword = req.body.userPassword;
+  bcrypt.hash(AlteredPassword, saltRounds, function(err, hash) { //bcrypt encrypts the password
+    db.profile.create({
+      user_name: req.body.userName,
+      user_age: req.body.userAge,
+      user_email: req.body.userEmail,
+      user_password: hash,
+      user_bio: req.body.userBio,
+      complete: req.body.complete
+    }).then(function(dbTodo) {
+      console.log('redirecting');
+          
+     })
   })
+})
 
 }

@@ -69,14 +69,13 @@ $(document).ready(function() {
                       <!-- Modal content-->
                       <div class="modal-content">
                         <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
                           <h4 class="modal-title"> Valid </h4>
                         </div>
                         <div class="modal-body">
                           <p>New Profile was created </p>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <a href="/">Go to Login</a>
                         </div>
                       </div>
                       
@@ -126,7 +125,9 @@ $(document).ready(function() {
                 // get's information from the website and sends it to the api-routes-configured to execute
                 $.post("/newUser", todo, function() {
                 console.log(todo);
-                });
+
+              });
+
 
             } else{
                 // where to create if what they input is invalid with the database
