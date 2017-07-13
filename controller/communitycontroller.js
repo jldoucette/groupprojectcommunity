@@ -67,6 +67,7 @@ module.exports = function(app){
       });
     });
 
+    //Creates new newletter
     app.post('/newsletters', function(req, res){
         db.Newsletters.create({
             post_title: req.body.title,
@@ -76,6 +77,7 @@ module.exports = function(app){
         })
     });
 
+    //creates new events
     app.post('/events', function(req, res){
         db.Events.create({
             event_name: req.body.eventName,
@@ -88,20 +90,12 @@ module.exports = function(app){
         })
     });    
 
+  
     app.get('/chatroom', function(req, res) {
         res.render('chatroom'); 
     });
 
-    // app.post('/newsletters', function(req, res){
-    //     db.Newsletters.create({
-    //         post_title: req.body.title,
-    //         post_body: req.body.body
-    //     }).then(function(data){
-    //         res.redirect("/newsletters");
-    //     })
-    // });
-
-
+    //Creates new blog posts
     app.post("/blog", function(req, res) {
        console.log(req.body);
        db.Blogs.create({
@@ -111,22 +105,24 @@ module.exports = function(app){
        }).then(function(data) {
          res.redirect("/blog");
        });
-     });
+    });
 
-      app.post("/classifieds", function(req, res) {
+    //Creates new classifieds post
+    app.post("/classifieds", function(req, res) {
        console.log(req.body);
-       db.Classifieds.create({
+      db.Classifieds.create({
          user: req.body.user,
          itemtitle: req.body.itemtitle,
          saleitem: req.body.saleitem,
          price: req.body.price
-       }).then(function(data) {
+      }).then(function(data) {
          res.redirect("/classifieds");
        });
-     });
+    });
 
-      app.post("/api/solditem", function(req, res) {
-    db.Classifieds.update({
+    //changes to sold
+    app.post("/api/solditem", function(req, res) {
+      db.Classifieds.update({
       sold: true},
         {where: {
           id: req.body.itemid
@@ -134,10 +130,11 @@ module.exports = function(app){
       })
     .then(function(data) {
       res.redirect("/classifieds");
+      });
     });
-  });
 
-     app.post("/comment", function(req, res) {
+    //Comments on the Blog
+    app.post("/comment", function(req, res) {
         console.log(req.body);
         db.Comments.create({
           commentpost: req.body.comment,
@@ -148,7 +145,7 @@ module.exports = function(app){
         });
       });
 
-       app.post("/makeoffer", function(req, res) {
+    app.post("/makeoffer", function(req, res) {
         console.log(req.body);
         var email=req.body.email;
         var itemforsale=req.body.itemforsale;
@@ -182,50 +179,48 @@ module.exports = function(app){
         }
         });
           res.redirect("/classifieds");
-        });
+      });
         
   //login
-   app.post("/login", function(req, res) {
-        // console.log(req);
-        db.profile.findOne({  where: {
-            user_name: req.body.user_name
-      }}).then(project =>{
-            //project is the body of the object that is returned if the user exists
-           bcrypt.compare(req.body.user_password, project.dataValues.user_password, function(err, matches) {
-              if (err)
-                console.log('Error while checking password');
-              else if (matches)
-                console.log('The password matches!');
-              else
-                console.log('The password does NOT match!');
-            });
-
-
-      })
+    app.post("/login", function(req, res) {
+          // console.log(req);
+          db.profile.findOne({  where: {
+              user_name: req.body.user_name
+        }}).then(project =>{
+              //project is the body of the object that is returned if the user exists
+            bcrypt.compare(req.body.user_password, project.dataValues.user_password, function(err, matches) {
+                if (err)
+                  console.log('Error while checking password');
+                else if (matches)
+                  console.log('The password matches!');
+                else
+                  console.log('The password does NOT match!');
+              });
+      });
 
 
   });
 
 
-  //create new Users STILL NEED TO MAKE THE VALUES APPROPRIATE WITH TEXT BOX
-  app.post("/newUser", function(req, res) {
-    var AlteredPassword = req.body.userPassword;
-     bcrypt.hash(AlteredPassword, saltRounds, function(err, hash) { //bcrypt encrypts the password
-      db.profile.create({
-          user_name: req.body.userName,
-          user_age: req.body.userAge,
-            user_email: req.body.userEmail,
-            user_password: hash,
-              user_bio: req.body.userBio,
-        complete: req.body.complete
-      }).then(function(dbTodo) {
-          res.json(dbTodo);//to see if message is sent through
-          // res.redirect("/"); //trying to redirect but not working
-          //if successful pop up an account that says you are successful
-          //if failed, pop up box says an account was not created
+    //create new Users STILL NEED TO MAKE THE VALUES APPROPRIATE WITH TEXT BOX
+    app.post("/newUser", function(req, res) {
+      var AlteredPassword = req.body.userPassword;
+      bcrypt.hash(AlteredPassword, saltRounds, function(err, hash) { //bcrypt encrypts the password
+        db.profile.create({
+            user_name: req.body.userName,
+            user_age: req.body.userAge,
+              user_email: req.body.userEmail,
+              user_password: hash,
+                user_bio: req.body.userBio,
+          complete: req.body.complete
+        }).then(function(dbTodo) {
+            res.json(dbTodo);//to see if message is sent through
+            // res.redirect("/"); //trying to redirect but not working
+            //if successful pop up an account that says you are successful
+            //if failed, pop up box says an account was not created
+        });
+        console.log(req);
       });
-      console.log(req);
     });
-  })
 
 }
