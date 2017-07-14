@@ -25,8 +25,25 @@ module.exports = function(app){
     });    
 
     app.get('/profile', function(req, res) {
-        res.render('profile');
+ if (userLoggedIn) {
+      db.profile.findOne({
+        where: {
+          user_name: siteUsername
+        }
+      }).then(function(data) {
+        console.log(data);
+          var hbsObject = {
+        profiles: data
+      };
+       res.render("profile", hbsObject);
+      });
+    }
+    else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
+
 
     app.post("/error", function(req, res) {
        res.redirect("/blog");
@@ -205,12 +222,15 @@ module.exports = function(app){
       })
     });    
 
+    
+
     //changes to sold
     app.post("/api/solditem", function(req, res) {
       db.Classifieds.update({
       sold: true},
         {where: {
-          id: req.body.itemid
+          id: req.body.itemid,
+          user: siteUsername
         }
       })
     .then(function(data) {
@@ -277,17 +297,19 @@ module.exports = function(app){
           if (project !=null){
               //project is the body of the object that is returned if the user exists
             bcrypt.compare(req.body.user_password, project.dataValues.user_password, function(err, matches) {
-                if (err)
+                if (err) {
                   console.log('Error while checking password');
+                }
                 else if (matches) {
                   console.log('The password matches!');
                   siteUsername=req.body.user_id;
                   userLoggedIn=true;
                   res.json("true")
                 }
-                else
+                else if (!matches) {
                   userLoggedIn=false;
                   console.log('The password does NOT match!');
+                }
               });
           }
           else {
