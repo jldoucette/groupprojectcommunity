@@ -11,8 +11,17 @@ module.exports = function(app){
         res.sendFile(path.join(__dirname + "/../views/index.html"));
       });
 
+     app.get("/logout", function(req, res) {
+       userLoggedIn=false;
+
+      });
+
     app.get('/home', function(req, res) {
         res.render('home'); 
+    });  
+
+      app.get('/nologinerror', function(req, res) {
+        res.render('nologinerror'); 
     });    
 
     app.get('/profile', function(req, res) {
@@ -265,6 +274,7 @@ module.exports = function(app){
           db.profile.findOne({  where: {
               user_name: req.body.user_id
         }}).then(project =>{
+          if (project !=null){
               //project is the body of the object that is returned if the user exists
             bcrypt.compare(req.body.user_password, project.dataValues.user_password, function(err, matches) {
                 if (err)
@@ -276,8 +286,15 @@ module.exports = function(app){
                   res.json("true")
                 }
                 else
+                  userLoggedIn=false;
                   console.log('The password does NOT match!');
               });
+          }
+          else {
+            userLoggedIn=false;
+            res.json("false");
+
+          }
       });
   });
 

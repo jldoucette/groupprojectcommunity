@@ -25,6 +25,9 @@ $(document).ready(function() {
        if(message=="true"){
         window.location.href="home";
        }
+       if(message=="false"){
+        window.location.href="nologinerror";
+       }
       })};
 
 // makes the user creation form
