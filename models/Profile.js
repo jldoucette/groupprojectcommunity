@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [1, 20]
+                len: [2, 50]
             }
         },
         user_password: {
@@ -32,31 +32,26 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 len: [1, 255]
             }
-        },
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
         }
     });
-    // //Joining the Blog table
-    // profile.associate = function (models) {
-    //     profile.hasMany(models.Blogs, {
-    //         onDelete: "cascade"
-    //     });
-    // }
-    // //Joining the Classifieds table
-    // profile.associate = function (models) {
-    //     profile.hasMany(models.Classifieds, {
-    //         onDelete: "cascade"
-    //     });
-    // }
-    // //Joining the Comments table
-    // profile.associate = function (models) {
-    //     profile.hasMany(models.Comments, {
-    //         onDelete: "cascade"
-    //     });
-    // };
+    //Joining the Blog table
+    profile.associate = function (models) {
+        profile.hasMany(models.Blogs, {
+            onDelete: "cascade"
+        });
+    }
+    //Joining the Classifieds table
+    profile.associate = function (models) {
+        profile.hasMany(models.Classifieds, {
+            onDelete: "cascade"
+        });
+    }
+    //Joining the Comments table
+    profile.associate = function (models) {
+        profile.hasMany(models.Comments, {
+            onDelete: "cascade"
+        });
+    };
 
     return profile;
 };
