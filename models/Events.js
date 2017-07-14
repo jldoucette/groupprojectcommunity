@@ -34,6 +34,10 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 len: [1, 50]
             }
+        },
+        event_user: {
+            type:DataTypes.STRING,
+            allowNull: false
         }
     });
     return Events;
