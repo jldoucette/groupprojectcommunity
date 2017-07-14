@@ -1,6 +1,6 @@
 
 //Make socket connection with the server
-var socket = io.connect('http://localhost:3001');
+var socket = io.connect('https://localhost:3001');
 
 //query DOM
 var message = $('#message');
