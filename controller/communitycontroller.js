@@ -70,17 +70,19 @@ module.exports = function(app){
 
     //Creates new newletter
     app.post('/newsletters', function(req, res){
-        db.Newsletters.create({
-            post_title: req.body.title,
-            post_body: req.body.body
-        }).then(function(data){
-            res.redirect("/newsletters");
-        })
+      .3
+      db.Newsletters.create({
+        post_title: req.body.title,
+        post_body: req.body.body
+      }).then(function(data){
+        res.redirect("/newsletters");
+      })
     });
 
     //creates new events
     app.post('/events', function(req, res){
         db.Events.create({
+            event_user: req.body.eventUser,
             event_name: req.body.eventName,
             event_time: req.body.eventTime,
             event_date: req.body.eventDate,
@@ -89,8 +91,18 @@ module.exports = function(app){
         }).then(function(data){
             res.redirect("/events");
         })
-    });    
+    });
 
+    //changes event to gone
+    app.delete("/events/:id", function(req, res) {
+      db.Events.destroy({
+        where: {
+          id: req.params.id
+        }
+      }).then(function(data) {
+        res.redirect("/events");
+      });
+    });
   
     app.get('/chatroom', function(req, res) {
         res.render('chatroom'); 
@@ -120,6 +132,19 @@ module.exports = function(app){
          res.redirect("/classifieds");
        });
     });
+
+    app.post('/newsletters/edit', function(req, res){
+      db.Newsletters.update({
+        post_title: req.body.title,
+        post_body: req.body.body
+      }, {
+        where: {
+          id: req.body.id
+        }
+      }).then(function(data){
+        res.redirect('/newsletters');
+      })
+    });    
 
     //changes to sold
     app.post("/api/solditem", function(req, res) {
@@ -167,6 +192,7 @@ module.exports = function(app){
           });
 
         var mailOptions = {
+
         from: 'jldoucette.work@gmail.com',
         to: email,
         subject: 'Email message from Community Classifieds Buyer ('+siteUsername+') about ' + itemforsale ,
@@ -175,9 +201,9 @@ module.exports = function(app){
 
         transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-        console.log(error);
+          console.log(error);
         } else {
-        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!Email sent: ' + info.response);
+          console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!Email sent: ' + info.response);
         }
         });
           res.redirect("/classifieds");
@@ -201,10 +227,7 @@ module.exports = function(app){
                   console.log('The password does NOT match!');
               });
       });
-
-
   });
-
 
     //create new Users STILL NEED TO MAKE THE VALUES APPROPRIATE WITH TEXT BOX
 
