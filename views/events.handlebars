@@ -22,13 +22,13 @@
                                     <td>{{this.event_details}}</td>
                                     <td>{{this.event_time}}</td>
                                     <td>{{this.event_location}}</td>
-                                    <td>
-                                        {{#if this.event_user}}    
+                                     <td>
+                                         {{#if this.event_user}}     
                                         <form class="create-update-form" action="/events/{{this.id}}?_method=DELETE" method="POST">
                                             <button class="btn btn-default btn-large" type="submit">Delete</button>
                                         </form>
-                                        {{/if}}                                               
-                                    </td>                                                                                                              
+                                         {{/if}}                                                
+                                    </td>                                                                                                               
                                 </tr>
                             {{/each}}
                         </tbody>
@@ -47,12 +47,7 @@
                 </div>
                 <div class="panel-body">
                     <form class="create-update-form" action ="/events" method="POST">
-                        <!-- Event User-->
-                        <div class="form-group">
-                            <label class="control-label" for="ca">Event User</label>                   
-                            <input id="textinput" name="eventUser" type="text" class="form-control input-md">
-                        </div>
-
+                
                         <!-- Event Name-->
                         <div class="form-group">
                             <label class="control-label" for="ca">Event Name</label>                   

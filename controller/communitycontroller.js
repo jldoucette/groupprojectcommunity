@@ -42,11 +42,11 @@ module.exports = function(app){
     else {
     console.log("failed if, no username");
     res.render("nologinerror");
-    // res.redirect("/");
      } 
     });
 
     app.get("/events", function(req, res) { 
+      if (userLoggedIn) {
         db.Events.findAll({
           order: [['id', 'DESC']]
         }).then(function(data){
@@ -55,10 +55,17 @@ module.exports = function(app){
             };
             console.log(hbsObject);
             res.render("events", hbsObject);
-        })
+        });
+      }
+        else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+
+     } 
     }); 
 
     app.get("/newsletters", function(req, res) {
+      if (userLoggedIn) {
         db.Newsletters.findAll({
           order: [['id', 'DESC']]
         }).then(function(data){
@@ -67,10 +74,17 @@ module.exports = function(app){
             };
             console.log(hbsObject);
             res.render("newsletters", hbsObject);
-        })
+        });
+      }
+          else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
+
     });      
 
     app.get('/classifieds', function(req, res) {
+        if (userLoggedIn) {
       db.Classifieds.findAll({
          order: ['id']
       }).then(function(data) {
@@ -79,23 +93,35 @@ module.exports = function(app){
       };
        res.render("classified", hbsObject);
       });
+    }
+        else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+
+     } 
     });
 
     //Creates new newletter
     app.post('/newsletters', function(req, res){
-      .3
+        if (userLoggedIn) {
       db.Newsletters.create({
         post_title: req.body.title,
         post_body: req.body.body
       }).then(function(data){
         res.redirect("/newsletters");
-      })
+      });
+    }
+        else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
 
     //creates new events
     app.post('/events', function(req, res){
+       if (userLoggedIn) {
         db.Events.create({
-            event_user: req.body.eventUser,
+            event_user: siteUsername,
             event_name: req.body.eventName,
             event_time: req.body.eventTime,
             event_date: req.body.eventDate,
@@ -103,7 +129,12 @@ module.exports = function(app){
             event_location: req.body.eventLocation
         }).then(function(data){
             res.redirect("/events");
-        })
+        });
+      }
+             else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
 
     //changes event to gone
@@ -118,7 +149,13 @@ module.exports = function(app){
     });
   
     app.get('/chatroom', function(req, res) {
+       if (userLoggedIn) {
         res.render('chatroom'); 
+      }
+               else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
 
     //Creates new blog posts
