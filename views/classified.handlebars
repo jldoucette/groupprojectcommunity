@@ -1,7 +1,7 @@
 <h1>Classifieds</h1>
 
 <div id="classified">
-           <h2>Classified Advertising</h2>
+      <h2>Classified Advertising</h2>
            <ul>
              {{#each classified}}
              {{#unless this.sold}}
@@ -18,14 +18,14 @@
                   {{/if}} 
 
               {{#if this.user}}
-              <form class="create-update-form" action="/api/solditem" method="POST">
-                   <div class="form-group">
+                <form class="create-update-form" action="/api/solditem" method="POST">
+                  <div class="form-group">
                      <input type="hidden" name="itemid" value={{this.id}}>
                    </div>
-                   <button class="btn btn-default btn-large" type="submit">Mark as Sold</button>
-              
-                  {{/if}} 
 
+                   <button class="btn btn-default btn-large" type="submit">Mark as Sold</button>
+              </form>
+                  {{/if}} 
        
    </div>
    <div class='panel-footer'>
@@ -61,8 +61,8 @@
                       <textarea class="form-control" name='saleitem' rows='5' id='bdesc'></textarea>
                     <label for="bprice">Price</label>
                      <input type="text" id="bprice" name="price">
-                     <label for="buser">User</label>
-                     <input type="text" id="buser" name="user">
+                     {{!-- <label for="buser">User</label>
+                     <input type="text" id="buser" name="user"> --}}
          
                    </div>
 
