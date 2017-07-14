@@ -4,6 +4,7 @@ var path = require("path");
 var bcrypt = require("bcrypt");
 var siteUsername;
 var userLoggedIn=false;
+var userEmailAddr;
 const saltRounds = 10;
 module.exports = function(app){
 
@@ -274,6 +275,7 @@ module.exports = function(app){
 
         from: 'jldoucette.work@gmail.com',
         to: email,
+        replyTo: userEmailAddr,
         subject: 'Email message from Community Classifieds Buyer ('+siteUsername+') about ' + itemforsale ,
         text: 'Message from Community Classifieds Buyer about '+ itemforsale + '. This was listed by you at $'+ price +':  '+ comment
         };
@@ -303,6 +305,14 @@ module.exports = function(app){
                 else if (matches) {
                   console.log('The password matches!');
                   siteUsername=req.body.user_id;
+                  db.profile.findOne({
+                  where: {
+                  user_name: siteUsername
+                  }
+                  }).then(function(data) {
+                  userEmailAddr=data.user_email
+                  console.log(userEmailAddr);
+                  });
                   userLoggedIn=true;
                   res.json("true")
                 }
@@ -340,3 +350,8 @@ app.post("/newUser", function(req, res) {
 })
 
 }
+
+    
+  
+ 
+
