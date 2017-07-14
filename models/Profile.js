@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [1, 20]
+                len: [2, 50]
             }
         },
         user_password: {
@@ -32,13 +32,8 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 len: [1, 255]
             }
-        },
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
         }
-    })
+    });
     //Joining the Blog table
     profile.associate = function (models) {
         profile.hasMany(models.Blogs, {
@@ -56,8 +51,8 @@ module.exports = function (sequelize, DataTypes) {
         profile.hasMany(models.Comments, {
             onDelete: "cascade"
         });
-    }
+    };
 
     return profile;
-}
+};
 

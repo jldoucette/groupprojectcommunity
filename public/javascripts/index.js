@@ -15,8 +15,6 @@ $(document).ready(function() {
     e.preventDefault();
     var EntryUserName = $(".userlogin").val().trim();
     var EntryPassword = $(".password").val().trim();
-     
-
      var UserLogin = {
         user_id: EntryUserName,
         user_password: EntryPassword
@@ -24,8 +22,7 @@ $(document).ready(function() {
     console.log(UserLogin);
      $.post("/login", UserLogin, function() {
        console.log(UserLogin);
-      });
-  }
+      })};
 
 // makes the user creation form
   function AppendNewUserForm(e){
@@ -46,11 +43,54 @@ $(document).ready(function() {
 						</form>
 										
 			</div>
-		</div>`);
-    }
+      <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog"> 
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title"> Invalid </h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>One of your entries was incorrect </p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div> 
+
+		</div>
+    
+    <div class="modal fade" id="successModal" role="dialog">
+                    <div class="modal-dialog"> 
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title"> Valid </h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>New Profile was created </p>
+                        </div>
+                        <div class="modal-footer">
+                        <a href="/">Go to Login</a>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div> 
+
+		</div>`
+    
+    
+    
+    );}
+    
 
     //grabs data from the html and throw it inside mysql
-    function PostUser(e){
+  function PostUser(e){
         e.preventDefault();
             var userName = $("#user_name").val().trim();
             var userAge = $("#user_age").val().trim();
@@ -78,25 +118,30 @@ $(document).ready(function() {
                 userBio: userBio
                 
               };
-              console.log("IT WORKS");
-
-                //get's information from the website and sends it to the api-routes-configured to execute
+                   $('#successModal').modal({backdrop: 'static',
+                        keyboard: true, 
+                        show: true
+                      }); 
+                // get's information from the website and sends it to the api-routes-configured to execute
                 $.post("/newUser", todo, function() {
                 console.log(todo);
-                });
+
+              });
+
 
             } else{
-                //where to create if what they input is invalid with the database
-                //if have time add a modal
-                console.log("One of your entries was incorrect");
-            }    
-
-
+                // where to create if what they input is invalid with the database
+                // if have time add a modal
+                 
+                $('#myModal').modal({backdrop: 'static',
+                        keyboard: true, 
+                        show: true
+                      });
       
 
 
-
-    }
+  }
+}
 
 function isString (value) {
 if (value && typeof value === 'object') {

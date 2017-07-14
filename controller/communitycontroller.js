@@ -2,6 +2,7 @@ var db = require('../models');
 var nodemailer = require('nodemailer');
 var path = require("path");
 var bcrypt = require("bcrypt");
+var siteUsername;
 const saltRounds = 10;
 module.exports = function(app){
 
@@ -111,7 +112,7 @@ module.exports = function(app){
     app.post("/blog", function(req, res) {
        console.log(req.body);
        db.Blogs.create({
-         user: req.body.user,
+         user: siteUsername,
          blogtitle: req.body.blogtitle,
          blogpost: req.body.blogpost
        }).then(function(data) {
@@ -123,7 +124,7 @@ module.exports = function(app){
     app.post("/classifieds", function(req, res) {
        console.log(req.body);
       db.Classifieds.create({
-         user: req.body.user,
+         user: siteUsername,
          itemtitle: req.body.itemtitle,
          saleitem: req.body.saleitem,
          price: req.body.price
@@ -164,7 +165,7 @@ module.exports = function(app){
         db.Comments.create({
           commentpost: req.body.comment,
           BlogId: req.body.currblogid,
-          user:req.body.currbloguser
+          user:siteUsername
         }).then(function(data) {
           res.redirect("/blog");
         });
@@ -180,6 +181,7 @@ module.exports = function(app){
         console.log('itemforsale is '+itemforsale);
         console.log('comment is '+comment);
         console.log('price is '+price);
+        console.log('siteUsername is '+siteUsername);
         
         var transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -190,10 +192,11 @@ module.exports = function(app){
           });
 
         var mailOptions = {
-          from: 'jldoucette.work@gmail.com',
-          to: email,
-          subject: 'Email message from Community Classifieds Buyer about ' + itemforsale ,
-          text: 'Message from Community Classifieds Buyer about '+ itemforsale + '. This was listed by you at $'+ price +':  '+ comment
+
+        from: 'jldoucette.work@gmail.com',
+        to: email,
+        subject: 'Email message from Community Classifieds Buyer ('+siteUsername+') about ' + itemforsale ,
+        text: 'Message from Community Classifieds Buyer about '+ itemforsale + '. This was listed by you at $'+ price +':  '+ comment
         };
 
         transporter.sendMail(mailOptions, function(error, info){
@@ -210,39 +213,39 @@ module.exports = function(app){
     app.post("/login", function(req, res) {
           // console.log(req);
           db.profile.findOne({  where: {
-              user_name: req.body.user_name
+              user_name: req.body.user_id
         }}).then(project =>{
               //project is the body of the object that is returned if the user exists
-          bcrypt.compare(req.body.user_password, project.dataValues.user_password, function(err, matches) {
-              if (err)
-                console.log('Error while checking password');
-              else if (matches)
-                console.log('The password matches!');
-              else
-                console.log('The password does NOT match!');
-            });
+            bcrypt.compare(req.body.user_password, project.dataValues.user_password, function(err, matches) {
+                if (err)
+                  console.log('Error while checking password');
+                else if (matches) {
+                  console.log('The password matches!');
+                  siteUsername=req.body.user_id;
+                }
+                else
+                  console.log('The password does NOT match!');
+              });
       });
   });
 
     //create new Users STILL NEED TO MAKE THE VALUES APPROPRIATE WITH TEXT BOX
-    app.post("/newUser", function(req, res) {
-      var AlteredPassword = req.body.userPassword;
-      bcrypt.hash(AlteredPassword, saltRounds, function(err, hash) { //bcrypt encrypts the password
-        db.profile.create({
-            user_name: req.body.userName,
-            user_age: req.body.userAge,
-              user_email: req.body.userEmail,
-              user_password: hash,
-                user_bio: req.body.userBio,
-          complete: req.body.complete
-        }).then(function(dbTodo) {
-            res.json(dbTodo);//to see if message is sent through
-            // res.redirect("/"); //trying to redirect but not working
-            //if successful pop up an account that says you are successful
-            //if failed, pop up box says an account was not created
-        });
-        console.log(req);
-      });
-    });
+
+app.post("/newUser", function(req, res) {
+  var AlteredPassword = req.body.userPassword;
+  bcrypt.hash(AlteredPassword, saltRounds, function(err, hash) { //bcrypt encrypts the password
+    db.profile.create({
+      user_name: req.body.userName,
+      user_age: req.body.userAge,
+      user_email: req.body.userEmail,
+      user_password: hash,
+      user_bio: req.body.userBio,
+      complete: req.body.complete
+    }).then(function(dbTodo) {
+      console.log('redirecting');
+          
+     })
+  })
+})
 
 }
