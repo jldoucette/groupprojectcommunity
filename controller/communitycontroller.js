@@ -3,6 +3,7 @@ var nodemailer = require('nodemailer');
 var path = require("path");
 var bcrypt = require("bcrypt");
 var siteUsername;
+var userLoggedIn=false;
 const saltRounds = 10;
 module.exports = function(app){
 
@@ -18,7 +19,13 @@ module.exports = function(app){
         res.render('profile');
     });
 
+    app.post("/error", function(req, res) {
+       res.redirect("/blog");
+     });
+  
+
     app.get('/blog', function(req, res) {
+      if (userLoggedIn) {
       db.Blogs.findAll({
 
          include: [db.Comments],
@@ -31,9 +38,15 @@ module.exports = function(app){
       };
        res.render("blog", hbsObject);
       });
+    }
+    else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+    // res.redirect("/");
+     } 
     });
 
-    app.get("/events", function(req, res) {
+    app.get("/events", function(req, res) { 
         db.Events.findAll({
           order: [['id', 'DESC']]
         }).then(function(data){
@@ -222,6 +235,8 @@ module.exports = function(app){
                 else if (matches) {
                   console.log('The password matches!');
                   siteUsername=req.body.user_id;
+                  userLoggedIn=true;
+                  res.json("true")
                 }
                 else
                   console.log('The password does NOT match!');
