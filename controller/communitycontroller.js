@@ -114,7 +114,7 @@ module.exports = function(app){
     app.get('/classifieds', function(req, res) {
         if (userLoggedIn) {
       db.Classifieds.findAll({
-         order: ['id', 'DESC']
+         order: [['id', 'DESC']]
       }).then(function(data) {
           var hbsObject = {
         classified: data
