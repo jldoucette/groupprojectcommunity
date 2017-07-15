@@ -5,7 +5,9 @@
     <ul>
         <div class="panel panel-default">
             <div class="panel-body">
-                <h2>Upcoming Events</h2>            
+                <h2>Upcoming Events </h2>
+
+                    <button class="btn btn-large" type="submit">Add New Event</button>             
                 <table class="table">
                     <thead>
                     <tr>
@@ -40,60 +42,12 @@
     
     {{!--Input data to make a new event--}}
     <div class="row">
-        <ul>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Make an Event!</h3>
-                </div>
-                <div class="panel-body">
-                    <form class="create-update-form" action ="/events" method="POST">
-                
-                        <!-- Event Name-->
-                        <div class="form-group">
-                            <label class="control-label" for="ca">Event Name</label>                   
-                            <input id="textinput" name="eventName" type="text" class="form-control input-md">
-                        </div>
+        
+        {{!-- New Events --}}
+         {{>newevents}}
 
-                        <!-- Event Location -->
-                        <div class="form-group">
-                            <label class="control-label" for="ca">Event Location</label>                            
-                                <select id="eventType" name="eventLocation" class="form-control">
-                                    <option value="Jefferson Park">Jefferson Park</option>
-                                    <option value="Community Pool D">Community Pool A</option>
-                                    <option value="Community Building 1">Community Building 1</option>
-                                    <option value="Tri Park">Tri Park</option>
-                                    <option value="Apple Park">Apple Park</option>
-                                    <option value="Community Pool A">Community Pool A</option>
-                                </select>                         
-                        </div>
-
-                        <!-- Event Time -->
-                        <div class="form-group">
-                            <label class="control-label" for="ca">Event Time</label>
-                            <input id="textinput" name="eventTime" type="text" placeholder="00:00 AM/PM" class="form-control input-md">
-                        </div>		        
-
-                        <!-- Event Date Input-->
-                        <div class="form-group">    
-                            <label class="control-label" for="ca">Date</label>
-                            <input id="textinput" name="eventDate" class="form-control" placeholder="MM/DD/YYYY" type="text">
-                        </div>
-
-                        <!-- Event Details -->
-                        <div class="form-group">
-                            <label class="control-label" for="ca">Event Details</label>
-                            <input id="textinput" name="eventDetails" type="text" placeholder="" class="form-control input-md">
-                        </div>
-
-                        <!-- Submit BUtton -->
-                        <div class="form-group">
-                            <label class="control-label" for="submitButton"></label>
-                            <button id="submitButton" name="submitButton" class="btn btn-large">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </ul>    
     </div>    
 </div>
+
+
 
