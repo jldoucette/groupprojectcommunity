@@ -1,20 +1,17 @@
-
+<h1>Welcome to Our Community Newsletter</h1>
 <div id="newsletterPost">
     {{!--Will display the newsletters--}}
     <div class="row">
-        <h1>Welcome to Our Community Newsletter</h1>
         <ul>
             {{#each newsletters}}
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Current News</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>{{this.post_title}}</h2> 
-                            <h6>{{this.createdAt}}</h6>
-                            <p>{{this.post_body}}</p>
-                        </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Current News</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <h2>{{this.post_title}}</h2> 
+                        <h6>{{this.createdAt}}</h6>
+                        <p>{{this.post_body}}</p>
                     </div>
                 </div>
             {{/each}}
@@ -23,35 +20,33 @@
 
     <div class="row">
         <ul>
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Post a Newsletter</h3>
-                    </div>
-                    <div class="panel-body">
-                        {{!--Input Box for New Newsletter updates--}}
-                        <form class="create-update form" action="/newsletters" method="POST">
-                            <!-- Newsletter Title-->
-                            <div class="form-group">
-                                <label class="control-label" for="ca">Newsletter Title</label>
-                                <input id="textinput" name="title" type="text" class="form-control input-md">
-                            </div>  
-
-                            <!-- Newsletter Body -->
-                            <div class="form-group">
-                                <label class="control-label" for="ca">Newsletter Information</label>
-                                <textarea class="form-control" name="body" rows="5" id="comment"></textarea>
-                            </div>
-
-                            <!--Submit Button-->
-                            <div class="form-group">
-                                <label class="control-label" for="submitButton"></label>
-                                <button id="submitButton" name="submitButton" class="btn btn-primary">Post News</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Post a Newsletter</h3>
                 </div>
-            </div>
+                <div class="panel-body">
+                    {{!--Input Box for New Newsletter updates--}}
+                    <form class="create-update form" action="/newsletters" method="POST">
+                        <!-- Newsletter Title-->
+                        <div class="form-group">
+                            <label class="control-label" for="ca">Newsletter Title</label>
+                            <input id="textinput" name="title" type="text" class="form-control input-md">
+                        </div>  
+
+                        <!-- Newsletter Body -->
+                        <div class="form-group">
+                            <label class="control-label" for="ca">Newsletter Information</label>
+                            <textarea class="form-control" name="body" rows="5" id="comment"></textarea>
+                        </div>
+
+                        <!--Submit Button-->
+                        <div class="form-group">
+                            <label class="control-label" for="submitButton"></label>
+                            <button id="submitButton" name="submitButton" class="btn btn-small">Post News</button>
+                        </div>
+                    </form>
+                </div>
+            </div>  
         </ul>
     </div>   
 </div>
