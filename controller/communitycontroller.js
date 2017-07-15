@@ -14,6 +14,7 @@ module.exports = function(app){
 
      app.get("/logout", function(req, res) {
        userLoggedIn=false;
+       res.redirect("/");
 
       });
 
@@ -177,7 +178,10 @@ module.exports = function(app){
   
     app.get('/chatroom', function(req, res) {
        if (userLoggedIn) {
-        res.render('chatroom'); 
+        var hbsObject={
+          username: siteUsername
+        }
+        res.render('chatroom',hbsObject); 
       }
                else {
     console.log("failed if, no username");
