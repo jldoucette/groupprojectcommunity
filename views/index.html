@@ -6,7 +6,7 @@
 	<title>Login Page</title>
 	<!-- Latest compiled and minified CSS & JS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" href="./stylesheets/LoginStyles.css" media="screen" title="no title">
+	<link rel="stylesheet" href="./stylesheets/style.css" media="screen" title="no title">
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
@@ -16,19 +16,23 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<ul class="list-group todo-list">
-					
-				
-						<div>
+								
+						<form>
+
+						<div class="form-group">
+							<label for="UserLogin">User Id: </label>
 							<input class="userlogin" placeholder="User name" type="text" name="username" />
 						</div>
-						<div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Password :</label>
 							<input class="password" placeholder="Password" type="password" name="password" />
 						</div>
-						<button type="submit" class="btn btn-default Entry">Login</button>	
+						<button type="submit" class="btn btn-default NewUser">Submit</button>
+						</form>
 						<form>					
 						<button type="submit" class="btn btn-default NewUser"> Create A Profile </button>
 						</form>
-					
+
 				</ul>
 			</div>
 		</div>
