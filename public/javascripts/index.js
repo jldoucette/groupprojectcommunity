@@ -8,7 +8,7 @@ $(document).ready(function() {
   $(document).on("click", ".PostUser", PostUser);
 
   //enter login to compare with database and allow access if matches
-  $(document).on("click", ".Entry", Submit);
+  $(document).on("click", ".ENTRY", Submit);
 });
 
   function Submit(e){
