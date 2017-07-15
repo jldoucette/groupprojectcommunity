@@ -20,8 +20,14 @@ $(document).ready(function() {
         user_password: EntryPassword
       }
     console.log(UserLogin);
-     $.post("/login", UserLogin, function() {
+     $.post("/login", UserLogin, function(message) {
        console.log(UserLogin);
+       if(message=="true"){
+        window.location.href="home";
+       }
+       if(message=="false"){
+        window.location.href="nologinerror";
+       }
       })};
 
 // makes the user creation form

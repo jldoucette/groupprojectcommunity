@@ -3,6 +3,8 @@ var nodemailer = require('nodemailer');
 var path = require("path");
 var bcrypt = require("bcrypt");
 var siteUsername;
+var userLoggedIn=false;
+var userEmailAddr;
 const saltRounds = 10;
 module.exports = function(app){
 
@@ -10,15 +12,47 @@ module.exports = function(app){
         res.sendFile(path.join(__dirname + "/../views/index.html"));
       });
 
+     app.get("/logout", function(req, res) {
+       userLoggedIn=false;
+
+      });
+
     app.get('/home', function(req, res) {
         res.render('home'); 
+    });  
+
+      app.get('/nologinerror', function(req, res) {
+        res.render('nologinerror'); 
     });    
 
     app.get('/profile', function(req, res) {
-        res.render('profile');
+ if (userLoggedIn) {
+      db.profile.findOne({
+        where: {
+          user_name: siteUsername
+        }
+      }).then(function(data) {
+        console.log(data);
+          var hbsObject = {
+        profiles: data
+      };
+       res.render("profile", hbsObject);
+      });
+    }
+    else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
 
+
+    app.post("/error", function(req, res) {
+       res.redirect("/blog");
+     });
+  
+
     app.get('/blog', function(req, res) {
+      if (userLoggedIn) {
       db.Blogs.findAll({
 
          include: [db.Comments],
@@ -31,9 +65,15 @@ module.exports = function(app){
       };
        res.render("blog", hbsObject);
       });
+    }
+    else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
 
-    app.get("/events", function(req, res) {
+    app.get("/events", function(req, res) { 
+      if (userLoggedIn) {
         db.Events.findAll({
           order: [['id', 'DESC']]
         }).then(function(data){
@@ -42,10 +82,17 @@ module.exports = function(app){
             };
             console.log(hbsObject);
             res.render("events", hbsObject);
-        })
+        });
+      }
+        else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+
+     } 
     }); 
 
     app.get("/newsletters", function(req, res) {
+      if (userLoggedIn) {
         db.Newsletters.findAll({
           order: [['id', 'DESC']]
         }).then(function(data){
@@ -54,10 +101,17 @@ module.exports = function(app){
             };
             console.log(hbsObject);
             res.render("newsletters", hbsObject);
-        })
+        });
+      }
+          else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
+
     });      
 
     app.get('/classifieds', function(req, res) {
+        if (userLoggedIn) {
       db.Classifieds.findAll({
          order: ['id']
       }).then(function(data) {
@@ -66,23 +120,35 @@ module.exports = function(app){
       };
        res.render("classified", hbsObject);
       });
+    }
+        else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+
+     } 
     });
 
     //Creates new newletter
     app.post('/newsletters', function(req, res){
-      .3
+        if (userLoggedIn) {
       db.Newsletters.create({
         post_title: req.body.title,
         post_body: req.body.body
       }).then(function(data){
         res.redirect("/newsletters");
-      })
+      });
+    }
+        else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
 
     //creates new events
     app.post('/events', function(req, res){
+       if (userLoggedIn) {
         db.Events.create({
-            event_user: req.body.eventUser,
+            event_user: siteUsername,
             event_name: req.body.eventName,
             event_time: req.body.eventTime,
             event_date: req.body.eventDate,
@@ -90,7 +156,12 @@ module.exports = function(app){
             event_location: req.body.eventLocation
         }).then(function(data){
             res.redirect("/events");
-        })
+        });
+      }
+             else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
 
     //changes event to gone
@@ -105,7 +176,13 @@ module.exports = function(app){
     });
   
     app.get('/chatroom', function(req, res) {
+       if (userLoggedIn) {
         res.render('chatroom'); 
+      }
+               else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
+     } 
     });
 
     //Creates new blog posts
@@ -146,12 +223,15 @@ module.exports = function(app){
       })
     });    
 
+    
+
     //changes to sold
     app.post("/api/solditem", function(req, res) {
       db.Classifieds.update({
       sold: true},
         {where: {
-          id: req.body.itemid
+          id: req.body.itemid,
+          user: siteUsername
         }
       })
     .then(function(data) {
@@ -195,6 +275,7 @@ module.exports = function(app){
 
         from: 'jldoucette.work@gmail.com',
         to: email,
+        replyTo: userEmailAddr,
         subject: 'Email message from Community Classifieds Buyer ('+siteUsername+') about ' + itemforsale ,
         text: 'Message from Community Classifieds Buyer about '+ itemforsale + '. This was listed by you at $'+ price +':  '+ comment
         };
@@ -215,17 +296,37 @@ module.exports = function(app){
           db.profile.findOne({  where: {
               user_name: req.body.user_id
         }}).then(project =>{
+          if (project !=null){
               //project is the body of the object that is returned if the user exists
             bcrypt.compare(req.body.user_password, project.dataValues.user_password, function(err, matches) {
-                if (err)
+                if (err) {
                   console.log('Error while checking password');
+                }
                 else if (matches) {
                   console.log('The password matches!');
                   siteUsername=req.body.user_id;
+                  db.profile.findOne({
+                  where: {
+                  user_name: siteUsername
+                  }
+                  }).then(function(data) {
+                  userEmailAddr=data.user_email
+                  console.log(userEmailAddr);
+                  });
+                  userLoggedIn=true;
+                  res.json("true")
                 }
-                else
+                else if (!matches) {
+                  userLoggedIn=false;
                   console.log('The password does NOT match!');
+                }
               });
+          }
+          else {
+            userLoggedIn=false;
+            res.json("false");
+
+          }
       });
   });
 
@@ -249,3 +350,8 @@ app.post("/newUser", function(req, res) {
 })
 
 }
+
+    
+  
+ 
+

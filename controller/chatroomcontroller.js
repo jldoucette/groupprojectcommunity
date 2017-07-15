@@ -3,8 +3,8 @@ var socket = require('socket.io');
 
 // app setups
 var app = express();
-var server = app.listen(4000, function(){
-    console.log('Listening to request on port 4000');
+var server = app.listen(3000, function(){
+    console.log('Listening to request on port 3000');
 });
 
     //socket set up
