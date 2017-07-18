@@ -1,0 +1,44 @@
+
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-large" data-toggle="modal" data-target="#myModal">Create a Newsletter</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        {{!--Input Box for New Newsletter updates--}}
+        <form class="create-update form" action="/newsletters" method="POST">
+            <!-- Newsletter Title-->
+            <div class="form-group">
+                <label class="control-label" for="ca">Newsletter Title</label>
+                <input id="textinput" name="title" type="text" class="form-control input-md">
+            </div>  
+
+            <!-- Newsletter Body -->
+            <div class="form-group">
+                <label class="control-label" for="ca">Newsletter Information</label>
+                <textarea class="form-control" name="body" rows="5" id="comment"></textarea>
+            </div>
+
+            <!--Submit Button-->
+            <div class="form-group">
+                <label class="control-label" for="submitButton"></label>
+                <button id="submitButton" name="submitButton" class="btn btn-small">Post News</button>
+            </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

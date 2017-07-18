@@ -1,6 +1,10 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-image: url("http://bridgeland.com/wp-content/uploads/BridgelandPowertothePeople.jpg");
+    opacity: .87;
+    background-repeat: no-repeat;
+    background-size:cover;  
 }
 
 a {
@@ -75,10 +79,11 @@ button{
     border-radius: 0 0 2px 2px;
 }
 
-body {
-    opacity: .87;
-};
-
 .row {
     background-color: gray,
 };
+
+.theModal { margin: 20px; } 
+.theModal > * {
+    margin: 25px;
+}

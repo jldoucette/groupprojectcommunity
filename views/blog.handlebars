@@ -1,14 +1,19 @@
-<h1>Community Discussion Area</h1>
-<h3>Community Member Posts</h3>
-<h4>This is a family community! Be Civil!</h4>
 
 <div id="blogpost">
+  <div class="row"> 
+    <ul>
+      <h1>Community Discussion Area</h1>
+      <h3>Community Member Posts</h3>
+      <h4>This is a family community! Be Civil!</h4>
+      <button type="button" class="btn btn-large" data-toggle="modal" data-target="#myModal">Add a Blog Post</button>
+    </ul>
+  </div>
   <div class="row">
     <ul>
       {{#each Blog}}
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">{{this.blogtitle}}</h3>     
+            <h3 class="panel-title"><strong>{{this.blogtitle}}</strong></h3>     
             <p>Posted By: {{this.user}} At {{this.createdAt}}</p>
           </div>
           <div class="panel-body">
@@ -16,8 +21,8 @@
           </div>
           <div class="panel-body">
             {{#each Comments}}
-            <p>Comments by:<strong> {{this.user}} on: {{this.createdAt}}</strong></p>  
-            <p>{{this.commentpost}}</p>
+              <p><strong>Comments by: {{this.user}} on: {{this.createdAt}}</strong></p>  
+              <p>{{this.commentpost}}</p>
             {{/each}}
               <form class="create-update-form" action="/comment" method="POST">
                 <div class="form-group">
@@ -35,31 +40,45 @@
   </div>
 
   {{!--Adds Blog Post--}}
-  <div class="row">
-    <ul>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Add a Blog Post!</h3>
+  <div class="theModal">
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">New Blog Post</h4>
+          </div>
+          
+          <div class="modal-body">
+          
+            <form class="create-update-form" for="ca" action="/blog" method="POST">
+
+              {{!--Blog Title--}}
+              <div class="form-group">
+                <label class="control-label" for="ca">Blog Title</label>
+                <input type="textinput" id="btitle" name="blogtitle" class="form-control input-md">
+              </div>  
+
+              {{!--Blog Post--}}
+              <div class="form-group">
+                <label class="control-label">Blog Post</label>
+                <textarea class="form-control" name='blogpost' rows='4' id='bpost'></textarea>
+              </div>
+              <button class="btn btn-large" type="submit">Post to Blog</button>
+            </form>       
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
         </div>
-        <div class="panel-body">
-          <form class="create-update-form" for="ca" action="/blog" method="POST">
 
-            {{!--Blog Title--}}
-            <div class="form-group">
-              <label class="control-label" for="ca">Blog Title</label>
-              <input type="textinput" id="btitle" name="blogtitle" class="form-control input-md">
-            </div>  
-
-            {{!--Blog Post--}}
-            <div class="form-group">
-              <label class="control-label">Blog Post</label>
-              <textarea class="form-control" name='blogpost' rows='4' id='bpost'></textarea>
-            </div>
-            <button class="btn btn-large" type="submit">Post to Blog</button>
-          </form>
-        </div>          
       </div>
-    </ul>
+    </div>
   </div>
 
 </div>

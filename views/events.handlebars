@@ -2,51 +2,24 @@
 <div id="eventsPost">
     {{!--Displays Information of Events--}}
     <div class="row">
-    <ul>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h2>Upcoming Events </h2>
-
-                    <button class="btn btn-large" type="submit">Add New Event</button>             
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Event Date</th>
-                        <th>Event Details</th>
-                        <th>Event Time</th>
-                        <th>Event Location</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {{#each events}}  
-                            <tr>        
-                                <td>{{this.event_date}}</td>
-                                <td>{{this.event_details}}</td>
-                                <td>{{this.event_time}}</td>
-                                <td>{{this.event_location}}</td>
-                                <td>
-                                    {{#if this.event_user}}    
-                                    <form class="create-update-form" action="/events/{{this.id}}?_method=DELETE" method="POST">
-                                        <button class="btn btn-large" type="submit">Delete</button>
-                                    </form>
-                                    {{/if}}                                               
-                                </td>                                                                                                              
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+        <ul>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2>Upcoming Events </h2>
+                    {{>eventsTable}} 
+                    {{!-- Modal Buttton --}}
+                    <button type="button" class="btn btn-large" data-toggle="modal" data-target="#myModal">Add New Event</button>                                
+                </div>
             </div>
-        </div>
-    <ul>
+        <ul>
     </div>
     
     {{!--Input data to make a new event--}}
     <div class="row">
-        
         {{!-- New Events --}}
          {{>newevents}}
+    </div>      
 
-    </div>    
 </div>
 
 
