@@ -30,7 +30,7 @@
                       <textarea class="form-control" name='comment' rows='2' id='bcomment'></textarea>
                       <input type="hidden" name="currblogid" value={{this.id}}>
                       <input type="hidden" name="currbloguser" value={{this.user}}>
-                    <button class="btn btn-small" type="submit">Comment on Post</button>               
+                    <button class="btn btn-small" id="commentbutton" type="submit">Comment on Post</button>               
                 </div>
               </form>              
           </div> 
@@ -76,6 +76,15 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
+
+            {{!--Blog Post--}}
+            <div class="form-group">
+              <label class="control-label">Blog Post</label>
+              <textarea class="form-control" name='blogpost' rows='4' id='bpost'></textarea>
+            </div>
+            <button class="btn btn-large" id="blogpostbutton" type="submit">Post to Blog</button>
+          </form>
+        </div>          
 
       </div>
     </div>

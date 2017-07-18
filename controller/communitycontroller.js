@@ -14,6 +14,7 @@ module.exports = function(app){
 
      app.get("/logout", function(req, res) {
        userLoggedIn=false;
+       res.redirect("/");
 
       });
 
@@ -111,19 +112,19 @@ module.exports = function(app){
     });      
 
     app.get('/classifieds', function(req, res) {
-      if (userLoggedIn) {
-        db.Classifieds.findAll({
-          order: ['id']
-        }).then(function(data) {
-            var hbsObject = {
-          classified: data
-        };
-        res.render("classified", hbsObject);
-        });
-      }
-      else {
-        console.log("failed if, no username");
-        res.render("nologinerror");
+        if (userLoggedIn) {
+      db.Classifieds.findAll({
+         order: [['id', 'ASC']]
+      }).then(function(data) {
+          var hbsObject = {
+        classified: data
+      };
+       res.render("classified", hbsObject);
+      });
+    }
+        else {
+    console.log("failed if, no username");
+    res.render("nologinerror");
      } 
     });
 
@@ -176,8 +177,11 @@ module.exports = function(app){
     });
   
     app.get('/chatroom', function(req, res) {
-      if (userLoggedIn) {
-        res.render('chatroom'); 
+       if (userLoggedIn) {
+        var hbsObject={
+          username: siteUsername
+        }
+        res.render('chatroom',hbsObject); 
       }
       else {
       console.log("failed if, no username");

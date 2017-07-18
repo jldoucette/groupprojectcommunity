@@ -17,6 +17,7 @@ btn.on('click', function(event){
         message: message.val(),
         handle: handle.val(),
     });
+     message.val("");
 });
 
 
