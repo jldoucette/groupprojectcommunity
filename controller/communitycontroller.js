@@ -27,23 +27,23 @@ module.exports = function(app){
     });    
 
     app.get('/profile', function(req, res) {
- if (userLoggedIn) {
-      db.profile.findOne({
-        where: {
-          user_name: siteUsername
-        }
-      }).then(function(data) {
-        console.log(data);
-          var hbsObject = {
-        profiles: data
-      };
-       res.render("profile", hbsObject);
-      });
-    }
-    else {
-    console.log("failed if, no username");
-    res.render("nologinerror");
-     } 
+      if (userLoggedIn) {
+        db.profile.findOne({
+          where: {
+            user_name: siteUsername
+          }
+        }).then(function(data) {
+          console.log(data);
+            var hbsObject = {
+          profiles: data
+        };
+        res.render("profile", hbsObject);
+        });
+      }
+      else {
+        console.log("failed if, no username");
+        res.render("nologinerror");
+      } 
     });
 
 
@@ -54,22 +54,22 @@ module.exports = function(app){
 
     app.get('/blog', function(req, res) {
       if (userLoggedIn) {
-      db.Blogs.findAll({
+        db.Blogs.findAll({
 
-         include: [db.Comments],
-         order:
-                [['createdAt','DESC'],
-                [db.Comments, 'createdAt', 'DESC']]
-      }).then(function(data) {
-          var hbsObject = {
-        Blog: data
-      };
-       res.render("blog", hbsObject);
-      });
-    }
-    else {
-    console.log("failed if, no username");
-    res.render("nologinerror");
+          include: [db.Comments],
+          order:
+                  [['createdAt','DESC'],
+                  [db.Comments, 'createdAt', 'DESC']]
+        }).then(function(data) {
+            var hbsObject = {
+          Blog: data
+        };
+        res.render("blog", hbsObject);
+        });
+      }
+      else {
+      console.log("failed if, no username");
+      res.render("nologinerror");
      } 
     });
 
@@ -125,23 +125,22 @@ module.exports = function(app){
         else {
     console.log("failed if, no username");
     res.render("nologinerror");
-
      } 
     });
 
     //Creates new newletter
     app.post('/newsletters', function(req, res){
-        if (userLoggedIn) {
-      db.Newsletters.create({
-        post_title: req.body.title,
-        post_body: req.body.body
-      }).then(function(data){
-        res.redirect("/newsletters");
-      });
-    }
-        else {
-    console.log("failed if, no username");
-    res.render("nologinerror");
+      if (userLoggedIn) {
+        db.Newsletters.create({
+          post_title: req.body.title,
+          post_body: req.body.body
+        }).then(function(data){
+          res.redirect("/newsletters");
+        });
+      }
+      else {
+        console.log("failed if, no username");
+        res.render("nologinerror");
      } 
     });
 
@@ -159,7 +158,7 @@ module.exports = function(app){
             res.redirect("/events");
         });
       }
-             else {
+       else {
     console.log("failed if, no username");
     res.render("nologinerror");
      } 
@@ -169,7 +168,8 @@ module.exports = function(app){
     app.delete("/events/:id", function(req, res) {
       db.Events.destroy({
         where: {
-          id: req.params.id
+          id: req.params.id,
+          event_user: siteUsername
         }
       }).then(function(data) {
         res.redirect("/events");
@@ -183,9 +183,9 @@ module.exports = function(app){
         }
         res.render('chatroom',hbsObject); 
       }
-               else {
-    console.log("failed if, no username");
-    res.render("nologinerror");
+      else {
+      console.log("failed if, no username");
+      res.render("nologinerror");
      } 
     });
 
@@ -226,8 +226,6 @@ module.exports = function(app){
         res.redirect('/newsletters');
       })
     });    
-
-    
 
     //changes to sold
     app.post("/api/solditem", function(req, res) {
@@ -270,26 +268,25 @@ module.exports = function(app){
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-            user: 'jldoucette.work@gmail.com',
-            pass: 'Group7%rj'
+              user: 'jldoucette.work@gmail.com',
+              pass: 'Group7%rj'
             }
-          });
+        });
 
-        var mailOptions = {
-
-        from: 'jldoucette.work@gmail.com',
-        to: email,
-        replyTo: userEmailAddr,
-        subject: 'Email message from Community Classifieds Buyer ('+siteUsername+') about ' + itemforsale ,
-        text: 'Message from Community Classifieds Buyer about '+ itemforsale + '. This was listed by you at $'+ price +':  '+ comment
+      var mailOptions = {
+          from: 'jldoucette.work@gmail.com',
+          to: email,
+          replyTo: userEmailAddr,
+          subject: 'Email message from Community Classifieds Buyer ('+siteUsername+') about ' + itemforsale ,
+          text: 'Message from Community Classifieds Buyer about '+ itemforsale + '. This was listed by you at $'+ price +':  '+ comment
         };
 
-        transporter.sendMail(mailOptions, function(error, info){
+      transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-          console.log(error);
-        } else {
+            console.log(error);
+          } else {
           console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!Email sent: ' + info.response);
-        }
+          }
         });
           res.redirect("/classifieds");
       });
@@ -329,29 +326,28 @@ module.exports = function(app){
           else {
             userLoggedIn=false;
             res.json("false");
-
           }
       });
-  });
+    });
 
     //create new Users STILL NEED TO MAKE THE VALUES APPROPRIATE WITH TEXT BOX
 
-app.post("/newUser", function(req, res) {
-  var AlteredPassword = req.body.userPassword;
-  bcrypt.hash(AlteredPassword, saltRounds, function(err, hash) { //bcrypt encrypts the password
-    db.profile.create({
-      user_name: req.body.userName,
-      user_age: req.body.userAge,
-      user_email: req.body.userEmail,
-      user_password: hash,
-      user_bio: req.body.userBio,
-      complete: req.body.complete
-    }).then(function(dbTodo) {
-      console.log('redirecting');
-          
-     })
-  })
-})
+    app.post("/newUser", function(req, res) {
+      var AlteredPassword = req.body.userPassword;
+      bcrypt.hash(AlteredPassword, saltRounds, function(err, hash) { //bcrypt encrypts the password
+        db.profile.create({
+          user_name: req.body.userName,
+          user_age: req.body.userAge,
+          user_email: req.body.userEmail,
+          user_password: hash,
+          user_bio: req.body.userBio,
+          complete: req.body.complete
+        }).then(function(dbTodo) {
+          console.log('redirecting');
+              
+        })
+      })
+    });
 
 }
 

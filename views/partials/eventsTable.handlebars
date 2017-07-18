@@ -1,0 +1,29 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Event Name<th>
+        <th>Event Date</th>
+        <th>Event Details</th>
+        <th>Event Time</th>
+        <th>Event Location</th>
+    </tr>
+    </thead>
+    <tbody>
+        {{#each events}}  
+            <tr>
+                <td>{{this.event_name}}<td>        
+                <td>{{this.event_date}}</td>
+                <td>{{this.event_details}}</td>
+                <td>{{this.event_time}}</td>
+                <td>{{this.event_location}}</td>
+                {{#if this.event_user}}
+                    <td>           
+                        <form class="create-update-form" action="/events/{{this.id}}?_method=DELETE" method="POST">
+                            <button class="btn btn-large" type="submit">Delete</button>
+                        </form>                                         
+                    </td>  
+                {{/if}}                                                                                                     
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

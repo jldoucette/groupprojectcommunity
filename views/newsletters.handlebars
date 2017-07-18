@@ -6,10 +6,9 @@
             {{#each newsletters}}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><strong>Current News</strong></h3>
+                        <h3 class="panel-title"><strong>{{this.post_title}}</strong></h3>
                     </div>
                     <div class="panel-body">
-                        <p>{{this.post_title}}</p> 
                         <p>Created at: {{this.createdAt}}</p>
                         <p>{{this.post_body}}</p>
                     </div>
@@ -18,35 +17,9 @@
         </ul>
     </div>
 
-    <div class="row">
-        <ul>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Post a Newsletter</h3>
-                </div>
-                <div class="panel-body">
-                    {{!--Input Box for New Newsletter updates--}}
-                    <form class="create-update form" action="/newsletters" method="POST">
-                        <!-- Newsletter Title-->
-                        <div class="form-group">
-                            <label class="control-label" for="ca">Newsletter Title</label>
-                            <input id="textinput" name="title" type="text" class="form-control input-md">
-                        </div>  
-
-                        <!-- Newsletter Body -->
-                        <div class="form-group">
-                            <label class="control-label" for="ca">Newsletter Information</label>
-                            <textarea class="form-control" name="body" rows="5" id="comment"></textarea>
-                        </div>
-
-                        <!--Submit Button-->
-                        <div class="form-group">
-                            <label class="control-label" for="submitButton"></label>
-                            <button id="submitButton" name="submitButton" class="btn btn-small">Post News</button>
-                        </div>
-                    </form>
-                </div>
-            </div>  
-        </ul>
+    <div class="theModal">
+        {{>postnewsletter}}       
     </div>   
 </div>
+
+

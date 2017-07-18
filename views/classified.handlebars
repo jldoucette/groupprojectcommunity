@@ -1,5 +1,11 @@
-<h1>Classifieds</h1>
+
 <div id="classified">
+  <div class="row">
+    <ul>
+      <h1>Classifieds</h1>
+      <button type="button" class="btn btn-large" data-toggle="modal" data-target="#myModal">Create a New Classified Ad</button>
+    </ul>
+  </div>
   <div class="row">
     <ul>
       {{#each classified}}
@@ -43,40 +49,58 @@
     </ul>
   </div>
 
-  {{!--Creates a new classified Post--}}
-  <div class="row">
-    <ul>
-      <div class="panel panel-default"> 
-  
-        <div class="panel-heading">
-            <h3 class="panel-title">Create a Classifed Ad</h3>
+
+  {{!-- Modal for New Classifieds Post --}}
+  <div class="theModal">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Create a Classified Ad</h4>
+          </div>
+
+
+          <div class="modal-body">
+            <form class="create-update-form" action="/classifieds" method="POST">
+              {{!--Item Title--}}
+              
+              <div class="form-group">
+                <label class="control-label" for="btitle">Item Title</label>
+                <input type="textinput" id="btitle" name="itemtitle" class="form-control input-md">
+              </div>
+
+              {{!--Item Description--}}
+              <div class="form-group">
+                <label class="control-label" for="bdesc">Item Description</label>
+                <textarea class="form-control" name='saleitem' rows='5' id='bdesc'></textarea>
+              </div> 
+
+              <div class="form-group">
+              <label class="control-label" for="bprice">Price</label>
+                <input type="text" id="bprice" name="price" class="form-control input-md">
+              </div>
+
+              <button class="btn btn-large" type="submit">Submit Ad</button>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+
         </div>
-
-        <div class="panel-body">
-          <form class="create-update-form" action="/classifieds" method="POST">
-            {{!--Item Title--}}
-            
-            <div class="form-group">
-              <label class="control-label" for="btitle">Item Title</label>
-              <input type="textinput" id="btitle" name="itemtitle" class="form-control input-md">
-            </div>
-
-            {{!--Item Description--}}
-            <div class="form-group">
-              <label class="control-label" for="bdesc">Item Description</label>
-              <textarea class="form-control" name='saleitem' rows='5' id='bdesc'></textarea>
-            </div> 
-
-            <div class="form-group">
-             <label class="control-label" for="bprice">Price</label>
-              <input type="text" id="bprice" name="price" class="form-control input-md">
-            </div>
-
-            <button class="btn btn-large" id="adbutton" type="submit">Submit Ad</button>
-          </form>
-        </div>
-
+        
       </div>
-    <ul>      
-  </div>  
+    </div>
+    
+  </div>
+
 </div>
+
+
+
