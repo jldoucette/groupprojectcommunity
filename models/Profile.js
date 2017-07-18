@@ -17,7 +17,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.TEXT,
             allowNull: true,
             validate: {
-                len: [1, 50]
+                len: [1, 500]
             }
         },
         user_email: {
